@@ -56,15 +56,15 @@ document.addEventListener("DOMContentLoaded", function () {
       var href = link.getAttribute("href");
       if (!href || href === "#") {
         e.preventDefault();
-        var service = link.getAttribute("data-service-label") || "questo servizio";
-        nlToast("Link Docusign non ancora configurato per: <strong>" + service + "</strong>.");
+        var service = link.getAttribute("data-service-label") || "";
+        nlToast(nlT("toast.docusignNotConfigured", { service: "<strong>" + service + "</strong>" }));
       }
     });
   });
 });
 
 // ---- Login page: show which service the user is being redirected to -------
-document.addEventListener("DOMContentLoaded", function () {
+function nlUpdateRedirectHint() {
   var hintBox = document.getElementById("login-redirect-hint");
   if (!hintBox) return;
   var redirect = new URLSearchParams(window.location.search).get("redirect");
@@ -75,10 +75,10 @@ document.addEventListener("DOMContentLoaded", function () {
     .map(function (w) { return w.charAt(0).toUpperCase() + w.slice(1); })
     .join(" ");
   if (label) {
-    hintBox.textContent = "Accedi per continuare verso: " + label;
+    hintBox.textContent = nlT("login.redirectPrefix") + " " + label;
     hintBox.style.display = "block";
   }
-});
+}
 
 // ---- Customer area: demo login ---------------------------------------------
 var NL_DEMO_USER = "cliente@novaluce.it";
@@ -130,8 +130,8 @@ document.addEventListener("DOMContentLoaded", function () {
   serviceButtons.forEach(function (btn) {
     btn.addEventListener("click", function (e) {
       e.preventDefault();
-      var service = btn.getAttribute("data-service-label") || "questo servizio";
-      nlToast("Funzionalità in arrivo: modulo per <strong>" + service + "</strong> collegato a Docusign via API.");
+      var service = btn.getAttribute("data-service-label") || "";
+      nlToast(nlT("toast.serviceComingSoon", { service: "<strong>" + service + "</strong>" }));
     });
   });
 });

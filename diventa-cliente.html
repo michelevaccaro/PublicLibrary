@@ -17,15 +17,26 @@
       <span class="brand-mark">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" fill="#fff"/></svg>
       </span>
-      <span class="brand-name">NovaLuce<span>Energia</span></span>
+      <span class="brand-name">NovaLuce<span data-i18n="brand.tagline">Energia</span></span>
     </a>
     <button class="nav-toggle" aria-label="Apri menu"><i class="bi bi-list"></i></button>
     <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="diventa-cliente.html" class="active">Diventa Cliente</a>
-      <a href="area-clienti.html">Area Clienti</a>
+      <a href="index.html" data-i18n="nav.home">Home</a>
+      <a href="diventa-cliente.html" class="active" data-i18n="nav.becomeCustomer">Diventa Cliente</a>
+      <a href="area-clienti.html" data-i18n="nav.customerArea">Area Clienti</a>
+      <div class="lang-switcher">
+        <button class="lang-switcher-btn" id="lang-switcher-btn" type="button" aria-haspopup="true" aria-expanded="false">
+          <i class="bi bi-globe2"></i> <span id="lang-switcher-current">IT</span> <i class="bi bi-caret-down-fill"></i>
+        </button>
+        <div class="lang-menu" id="lang-menu">
+          <button type="button" data-lang="it">🇮🇹 Italiano</button>
+          <button type="button" data-lang="en">🇬🇧 English</button>
+          <button type="button" data-lang="fr">🇫🇷 Français</button>
+          <button type="button" data-lang="es">🇪🇸 Español</button>
+        </div>
+      </div>
       <div class="nav-cta">
-        <a href="area-clienti.html" class="btn btn-outline-dark btn-sm"><i class="bi bi-person-circle"></i> Accedi</a>
+        <a href="area-clienti.html" class="btn btn-outline-dark btn-sm"><i class="bi bi-person-circle"></i> <span data-i18n="nav.login">Accedi</span></a>
       </div>
     </div>
   </nav>
@@ -33,75 +44,75 @@
 
 <div class="page-header">
   <div class="container">
-    <div class="breadcrumb"><a href="index.html">Home</a> / Diventa Cliente</div>
-    <span class="eyebrow">Nuove forniture</span>
-    <h1>Diventa Cliente NovaLuce Energia</h1>
-    <p>Scegli la procedura corretta per la tua situazione: ogni richiesta avvia un percorso guidato di firma digitale, senza bisogno di registrazione.</p>
+    <div class="breadcrumb"><a href="index.html" data-i18n="nav.home">Home</a> / <span data-i18n="nav.becomeCustomer">Diventa Cliente</span></div>
+    <span class="eyebrow" data-i18n="pageHeader.eyebrow">Nuove forniture</span>
+    <h1 data-i18n="pageHeader.title">Diventa Cliente NovaLuce Energia</h1>
+    <p data-i18n="pageHeader.desc">Scegli la procedura corretta per la tua situazione: ogni richiesta avvia un percorso guidato di firma digitale, senza bisogno di registrazione.</p>
   </div>
 </div>
 
 <section>
   <div class="container">
     <div class="section-head" style="max-width:760px;">
-      <span class="eyebrow">Procedure disponibili</span>
-      <h2>Seleziona il servizio che ti interessa</h2>
-      <p>Ogni scheda avvia un percorso Docusign dedicato alla procedura scelta. Al termine della compilazione riceverai conferma via email.</p>
+      <span class="eyebrow" data-i18n="prospectSection.eyebrow">Procedure disponibili</span>
+      <h2 data-i18n="prospectSection.title">Seleziona il servizio che ti interessa</h2>
+      <p data-i18n="prospectSection.desc">Ogni scheda avvia un percorso Docusign dedicato alla procedura scelta. Al termine della compilazione riceverai conferma via email.</p>
     </div>
 
     <div class="service-grid">
 
       <div class="service-card prospect" id="switch">
-        <span class="service-tag">Fornitura attiva altrove</span>
+        <span class="service-tag" data-i18n="tag.fornitura-attiva-altrove">Fornitura attiva altrove</span>
         <div class="service-icon"><i class="bi bi-shuffle"></i></div>
         <h3>Switch</h3>
-        <span class="en-title">Supplier Change</span>
-        <p class="desc">Passa a NovaLuce Energia mantenendo lo stesso punto di fornitura, senza interruzioni del servizio.</p>
-        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="switch" data-service-label="Switch (Supplier Change)">Avvia procedura <i class="bi bi-arrow-right"></i></a>
+        <span class="en-title" data-i18n="gloss.switch">Supplier Change</span>
+        <p class="desc" data-i18n="desc.switch">Passa a NovaLuce Energia mantenendo lo stesso punto di fornitura, senza interruzioni del servizio.</p>
+        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="switch" data-service-label="Switch"><span data-i18n="common.startProcedure">Avvia procedura</span> <i class="bi bi-arrow-right"></i></a>
       </div>
 
       <div class="service-card prospect" id="voltura-contestuale">
-        <span class="service-tag">Cambio intestatario</span>
+        <span class="service-tag" data-i18n="tag.cambio-intestatario">Cambio intestatario</span>
         <div class="service-icon"><i class="bi bi-people"></i></div>
         <h3>Voltura Contestuale</h3>
-        <span class="en-title">Simultaneous Holder Change + Switch</span>
-        <p class="desc">Cambia l'intestatario del contratto e passa a NovaLuce Energia in un'unica procedura.</p>
-        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="voltura-contestuale" data-service-label="Voltura Contestuale (Simultaneous Holder Change + Switch)">Avvia procedura <i class="bi bi-arrow-right"></i></a>
+        <span class="en-title" data-i18n="gloss.voltura-contestuale">Simultaneous Holder Change + Switch</span>
+        <p class="desc" data-i18n="desc.voltura-contestuale">Cambia l'intestatario del contratto e passa a NovaLuce Energia in un'unica procedura.</p>
+        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="voltura-contestuale" data-service-label="Voltura Contestuale"><span data-i18n="common.startProcedure">Avvia procedura</span> <i class="bi bi-arrow-right"></i></a>
       </div>
 
       <div class="service-card prospect" id="allaccio">
-        <span class="service-tag">Nuovo punto</span>
+        <span class="service-tag" data-i18n="tag.nuovo-punto">Nuovo punto</span>
         <div class="service-icon"><i class="bi bi-plug"></i></div>
         <h3>Allaccio</h3>
-        <span class="en-title">New Connection</span>
-        <p class="desc">Richiedi un nuovo allacciamento alla rete elettrica o del gas per un immobile mai servito prima.</p>
-        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="allaccio" data-service-label="Allaccio (New Connection)">Avvia procedura <i class="bi bi-arrow-right"></i></a>
+        <span class="en-title" data-i18n="gloss.allaccio">New Connection</span>
+        <p class="desc" data-i18n="desc.allaccio">Richiedi un nuovo allacciamento alla rete elettrica o del gas per un immobile mai servito prima.</p>
+        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="allaccio" data-service-label="Allaccio"><span data-i18n="common.startProcedure">Avvia procedura</span> <i class="bi bi-arrow-right"></i></a>
       </div>
 
       <div class="service-card prospect" id="prima-attivazione">
-        <span class="service-tag">Punto mai attivo</span>
+        <span class="service-tag" data-i18n="tag.punto-mai-attivo">Punto mai attivo</span>
         <div class="service-icon"><i class="bi bi-lightning-charge"></i></div>
         <h3>Prima Attivazione</h3>
-        <span class="en-title">First Activation</span>
-        <p class="desc">Attiva per la prima volta la fornitura di luce o gas su un punto già allacciato ma mai attivato.</p>
-        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="prima-attivazione" data-service-label="Prima Attivazione (First Activation)">Avvia procedura <i class="bi bi-arrow-right"></i></a>
+        <span class="en-title" data-i18n="gloss.prima-attivazione">First Activation</span>
+        <p class="desc" data-i18n="desc.prima-attivazione">Attiva per la prima volta la fornitura di luce o gas su un punto già allacciato ma mai attivato.</p>
+        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="prima-attivazione" data-service-label="Prima Attivazione"><span data-i18n="common.startProcedure">Avvia procedura</span> <i class="bi bi-arrow-right"></i></a>
       </div>
 
       <div class="service-card prospect" id="business-piva">
-        <span class="service-tag">Aziende</span>
+        <span class="service-tag" data-i18n="tag.aziende">Aziende</span>
         <div class="service-icon"><i class="bi bi-briefcase"></i></div>
         <h3>Attivazione Contratto Business (P.IVA)</h3>
-        <span class="en-title">Business/VAT Contract Activation</span>
-        <p class="desc">Attiva una fornitura dedicata alla tua azienda o Partita IVA, con condizioni pensate per il business.</p>
-        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="business-piva" data-service-label="Attivazione Contratto Business - P.IVA (Business/VAT Contract Activation)">Avvia procedura <i class="bi bi-arrow-right"></i></a>
+        <span class="en-title" data-i18n="gloss.business-piva">Business/VAT Contract Activation</span>
+        <p class="desc" data-i18n="desc.business-piva">Attiva una fornitura dedicata alla tua azienda o Partita IVA, con condizioni pensate per il business.</p>
+        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="business-piva" data-service-label="Attivazione Contratto Business (P.IVA)"><span data-i18n="common.startProcedure">Avvia procedura</span> <i class="bi bi-arrow-right"></i></a>
       </div>
 
       <div class="service-card prospect" id="subentro">
-        <span class="service-tag">Nuovo occupante</span>
+        <span class="service-tag" data-i18n="tag.nuovo-occupante">Nuovo occupante</span>
         <div class="service-icon"><i class="bi bi-house-door"></i></div>
         <h3>Subentro</h3>
-        <span class="en-title">Meter Reactivation for New Occupant</span>
-        <p class="desc">Riattiva il contatore a tuo nome subentrando in un immobile senza contratto attivo.</p>
-        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="subentro" data-service-label="Subentro (Meter Reactivation for New Occupant)">Avvia procedura <i class="bi bi-arrow-right"></i></a>
+        <span class="en-title" data-i18n="gloss.subentro">Meter Reactivation for New Occupant</span>
+        <p class="desc" data-i18n="desc.subentro">Riattiva il contatore a tuo nome subentrando in un immobile senza contratto attivo.</p>
+        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="subentro" data-service-label="Subentro"><span data-i18n="common.startProcedure">Avvia procedura</span> <i class="bi bi-arrow-right"></i></a>
       </div>
 
     </div>
@@ -112,21 +123,23 @@
   <div class="container">
     <div class="cta-banner" style="background:linear-gradient(120deg, var(--nl-blue), var(--nl-blue-light));">
       <div>
-        <h2>Sei già cliente NovaLuce Energia?</h2>
-        <p>Accedi all'Area Clienti per gestire autolettura, bolletta web, voltura e altri servizi del tuo contratto.</p>
+        <h2 data-i18n="ctaLoginBanner.title">Sei già cliente NovaLuce Energia?</h2>
+        <p data-i18n="ctaLoginBanner.desc">Accedi all'Area Clienti per gestire autolettura, bolletta web, voltura e altri servizi del tuo contratto.</p>
       </div>
-      <a href="area-clienti.html" class="btn btn-outline"><i class="bi bi-box-arrow-in-right"></i> Accedi all'Area Clienti</a>
+      <a href="area-clienti.html" class="btn btn-outline"><i class="bi bi-box-arrow-in-right"></i> <span data-i18n="hero.ctaLogin">Accedi all'Area Clienti</span></a>
     </div>
   </div>
 </section>
 
 <footer class="site-footer">
   <div class="container footer-bottom" style="border-top:none; padding-top:0;">
-    <span>© 2026 NovaLuce Energia S.p.A. — Sito demo, nessun dato reale.</span>
-    <span><a href="#">Privacy</a> · <a href="#">Cookie</a> · <a href="#">Termini</a></span>
+    <span data-i18n="footer.bottomCopy">© 2026 NovaLuce Energia S.p.A. — Sito demo, nessun dato reale.</span>
+    <span><a href="#" data-i18n="footer.privacy">Privacy</a> · <a href="#" data-i18n="footer.cookie">Cookie</a> · <a href="#" data-i18n="footer.terms">Termini</a></span>
   </div>
 </footer>
 
+<script src="assets/js/i18n-data.js"></script>
+<script src="assets/js/i18n.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
