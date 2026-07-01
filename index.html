@@ -1,21 +1,212 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <title>Minimal JS front-end App Example</title>
-  <script src="src/model/Book.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NovaLuce Energia | Luce e Gas per Casa e Business</title>
+<meta name="description" content="NovaLuce Energia: fornitore di luce e gas. Gestisci il tuo contratto nell'Area Clienti o richiedi l'attivazione di un nuovo servizio." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
+<link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
-  <h1>Public Library</h1>
-  <h2>An Example of a Minimal JavaScript front-end App</h2>
-  <p>This app supports the following operations:</p>
-  <menu>
-    <li><a href="listBooks.html"><button type="button">List all books</button></a></li>
-    <li><a href="createBook.html"><button type="button">Add a new book</button></a></li>
-    <li><a href="updateBook.html"><button type="button">Update a book</button></a></li>
-    <li><a href="deleteBook.html"><button type="button">Delete a book</button></a></li>
-    <li><button type="button" onclick="Book.clearData()">Clear database</button></li>
-    <li><button type="button" onclick="Book.createTestData()">Create test data</button></li>
-  </menu>
+
+<header class="site-header">
+  <nav class="navbar container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" fill="#fff"/></svg>
+      </span>
+      <span class="brand-name">NovaLuce<span>Energia</span></span>
+    </a>
+    <button class="nav-toggle" aria-label="Apri menu"><i class="bi bi-list"></i></button>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="diventa-cliente.html">Diventa Cliente</a>
+      <a href="area-clienti.html">Area Clienti</a>
+      <div class="nav-cta">
+        <a href="area-clienti.html" class="btn btn-outline-dark btn-sm"><i class="bi bi-person-circle"></i> Accedi</a>
+        <a href="diventa-cliente.html" class="btn btn-primary btn-sm">Diventa Cliente</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <span class="hero-eyebrow"><i class="bi bi-leaf-fill"></i> 100% energia da fonti rinnovabili</span>
+      <h1>Energia semplice, trasparente, ogni giorno.</h1>
+      <p class="lead">NovaLuce Energia fornisce luce e gas a case e imprese in tutta Italia, con tariffe chiare, assistenza dedicata e tutti i servizi gestibili online, in pochi click.</p>
+      <div class="hero-actions">
+        <a href="diventa-cliente.html" class="btn btn-primary"><i class="bi bi-lightning-charge-fill"></i> Diventa Cliente</a>
+        <a href="area-clienti.html" class="btn btn-outline"><i class="bi bi-box-arrow-in-right"></i> Accedi all'Area Clienti</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>+520.000</strong><span>Clienti serviti</span></div>
+        <div><strong>100%</strong><span>Energia verde certificata</span></div>
+        <div><strong>24/7</strong><span>Assistenza online</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3><i class="bi bi-speedometer2"></i> La tua fornitura in un colpo d'occhio</h3>
+      <div class="hero-card-row"><span class="label">Consumo stimato mensile</span><span class="value">210 kWh</span></div>
+      <div class="hero-card-row"><span class="label">Prossima bolletta</span><span class="value">18 Luglio</span></div>
+      <div class="hero-card-row"><span class="label">Modalità pagamento</span><span class="value">SEPA</span></div>
+      <div class="hero-card-row"><span class="label">Origine energia</span><span class="tag-green">Rinnovabile</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-grey" style="padding-top:56px; padding-bottom:56px;">
+  <div class="container">
+    <div class="section-head" style="margin-bottom:32px;">
+      <span class="eyebrow">Link Rapidi</span>
+      <h2 style="font-size:1.5rem;">Vai dritto alla procedura che ti serve</h2>
+      <p>Le operazioni più richieste, a portata di click.</p>
+    </div>
+    <div class="quicklinks-grid">
+      <a href="area-clienti.html?redirect=area-clienti-dashboard.html%23voltura" class="quicklink-item">
+        <span class="quicklink-icon"><i class="bi bi-arrow-left-right"></i></span>
+        <span class="it-title">Voltura</span>
+        <span class="en-caption">Change of Contract Holder</span>
+      </a>
+      <a href="diventa-cliente.html#prima-attivazione" class="quicklink-item is-prospect">
+        <span class="quicklink-icon"><i class="bi bi-lightning-charge"></i></span>
+        <span class="it-title">Prima Attivazione</span>
+        <span class="en-caption">First Activation</span>
+      </a>
+      <a href="diventa-cliente.html#switch" class="quicklink-item is-prospect">
+        <span class="quicklink-icon"><i class="bi bi-shuffle"></i></span>
+        <span class="it-title">Switch</span>
+        <span class="en-caption">Supplier Change</span>
+      </a>
+      <a href="area-clienti.html?redirect=area-clienti-dashboard.html%23autolettura" class="quicklink-item">
+        <span class="quicklink-icon"><i class="bi bi-speedometer2"></i></span>
+        <span class="it-title">Autolettura</span>
+        <span class="en-caption">Self-Meter Reading</span>
+      </a>
+      <a href="area-clienti.html?redirect=area-clienti-dashboard.html%23bolletta-web" class="quicklink-item">
+        <span class="quicklink-icon"><i class="bi bi-envelope-paper-heart"></i></span>
+        <span class="it-title">Bolletta Web</span>
+        <span class="en-caption">Paperless Billing</span>
+      </a>
+      <a href="area-clienti.html?redirect=area-clienti-dashboard.html%23disdetta-recesso" class="quicklink-item">
+        <span class="quicklink-icon"><i class="bi bi-x-circle"></i></span>
+        <span class="it-title">Disdetta / Recesso</span>
+        <span class="en-caption">Contract Termination</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Perché sceglierci</span>
+      <h2>Tutto quello che serve, senza sorprese</h2>
+      <p>Gestione digitale del contratto, tariffe trasparenti e un'assistenza pensata per farti risparmiare tempo.</p>
+    </div>
+    <div class="grid-3">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-file-earmark-bar-graph"></i></div>
+        <h3>Tariffe trasparenti</h3>
+        <p>Nessun costo nascosto: prezzo dell'energia chiaro fin dal preventivo, sia per la luce che per il gas.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-phone"></i></div>
+        <h3>Tutto online</h3>
+        <p>Autolettura, bolletta web, domiciliazione e molto altro: gestisci la tua fornitura dall'Area Clienti, 24 ore su 24.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-headset"></i></div>
+        <h3>Assistenza dedicata</h3>
+        <p>Un servizio clienti pronto ad aiutarti in ogni fase: dalla richiesta di attivazione alla gestione quotidiana.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-grey">
+  <div class="container split">
+    <div class="offer-card">
+      <span class="eyebrow">Per la casa e per il business</span>
+      <h2>Un'unica energia, due mondi da servire</h2>
+      <p>Che tu sia un privato o un'azienda con Partita IVA, NovaLuce Energia ti accompagna dalla prima attivazione alla gestione quotidiana del contratto.</p>
+      <ul>
+        <li><i class="bi bi-check-circle-fill"></i> Attivazione rapida per nuove forniture e subentri</li>
+        <li><i class="bi bi-check-circle-fill"></i> Switch guidato dal tuo attuale fornitore, senza interruzioni</li>
+        <li><i class="bi bi-check-circle-fill"></i> Fatturazione elettronica e bolletta web inclusa</li>
+        <li><i class="bi bi-check-circle-fill"></i> Assistenza su voltura, disdetta e rimborsi</li>
+      </ul>
+      <a href="diventa-cliente.html" class="btn btn-primary mt-40">Scopri come diventare cliente</a>
+    </div>
+    <div class="offer-card">
+      <span class="eyebrow">Sei già nostro cliente?</span>
+      <h2>Gestisci tutto dall'Area Clienti</h2>
+      <p>Autolettura, domiciliazione SEPA, estratto conto, voltura, disdetta e altri 9 servizi disponibili in pochi click, in totale autonomia.</p>
+      <ul>
+        <li><i class="bi bi-check-circle-fill"></i> Invia l'autolettura del tuo contatore</li>
+        <li><i class="bi bi-check-circle-fill"></i> Attiva la domiciliazione bancaria SEPA</li>
+        <li><i class="bi bi-check-circle-fill"></i> Richiedi estratto conto e conferme di pagamento</li>
+        <li><i class="bi bi-check-circle-fill"></i> Gestisci voltura, recesso e rimborsi</li>
+      </ul>
+      <a href="area-clienti.html" class="btn btn-outline-dark mt-40">Accedi all'Area Clienti</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="cta-banner">
+      <div>
+        <h2>Pronto a passare a un'energia più semplice?</h2>
+        <p>Richiedi l'attivazione: ti guidiamo passo dopo passo nella procedura corretta per il tuo caso.</p>
+      </div>
+      <a href="diventa-cliente.html" class="btn btn-outline"><i class="bi bi-arrow-right-circle"></i> Vai alle procedure per nuovi clienti</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" style="margin-bottom:14px;">
+          <span class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" fill="#fff"/></svg>
+          </span>
+          <span class="brand-name" style="color:#fff;">NovaLuce<span style="color:rgba(255,255,255,.6);">Energia</span></span>
+        </a>
+        <p>Fornitore di energia elettrica e gas naturale. Demo di prodotto — dati e contenuti non reali.</p>
+      </div>
+      <div>
+        <h4>Il sito</h4>
+        <a href="index.html">Home</a>
+        <a href="diventa-cliente.html">Diventa Cliente</a>
+        <a href="area-clienti.html">Area Clienti</a>
+      </div>
+      <div>
+        <h4>Servizi Clienti</h4>
+        <a href="area-clienti.html">Autolettura</a>
+        <a href="area-clienti.html">Domiciliazione SEPA</a>
+        <a href="area-clienti.html">Bolletta Web</a>
+      </div>
+      <div>
+        <h4>Diventa Cliente</h4>
+        <a href="diventa-cliente.html">Switch fornitore</a>
+        <a href="diventa-cliente.html">Prima attivazione</a>
+        <a href="diventa-cliente.html">Attivazione Business</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 NovaLuce Energia S.p.A. — Sito demo, nessun dato reale.</span>
+      <span><a href="#">Privacy</a> · <a href="#">Cookie</a> · <a href="#">Termini</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
 </body>
 </html>

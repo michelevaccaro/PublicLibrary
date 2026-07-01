@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Accedi all'Area Clienti | NovaLuce Energia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="navbar container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" fill="#fff"/></svg>
+      </span>
+      <span class="brand-name">NovaLuce<span>Energia</span></span>
+    </a>
+    <button class="nav-toggle" aria-label="Apri menu"><i class="bi bi-list"></i></button>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="diventa-cliente.html">Diventa Cliente</a>
+      <a href="area-clienti.html" class="active">Area Clienti</a>
+      <div class="nav-cta">
+        <a href="diventa-cliente.html" class="btn btn-primary btn-sm">Diventa Cliente</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="login-wrap">
+  <div class="login-card">
+    <span class="brand-mark" style="display:flex;">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" fill="#fff"/></svg>
+    </span>
+    <h1>Accedi all'Area Clienti</h1>
+    <p class="sub">Gestisci la tua fornitura NovaLuce Energia: autolettura, bolletta web, voltura e molto altro.</p>
+
+    <div class="login-error" id="login-error">
+      <i class="bi bi-exclamation-triangle-fill"></i> Credenziali non valide. Riprova oppure usa le credenziali demo qui sotto.
+    </div>
+
+    <div class="demo-hint" id="login-redirect-hint" style="display:none; margin-top:0; margin-bottom:18px;"></div>
+
+    <form onsubmit="return nlHandleLogin(event)">
+      <div class="form-group">
+        <label for="login-email">Email o codice cliente</label>
+        <input type="text" id="login-email" placeholder="nome.cognome@email.it" required />
+      </div>
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="••••••••" required />
+      </div>
+      <div class="form-row-between">
+        <label><input type="checkbox" /> Ricordami</label>
+        <a href="#" style="color:var(--nl-green-dark); font-weight:600;">Password dimenticata?</a>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block"><i class="bi bi-box-arrow-in-right"></i> Accedi</button>
+    </form>
+
+    <div class="demo-hint">
+      <strong>Demo:</strong> usa email <strong>cliente@novaluce.it</strong> e password <strong>novaluce2026</strong> per accedere.
+    </div>
+
+    <p class="small-note text-center mt-40">Non sei ancora cliente? <a href="diventa-cliente.html" style="color:var(--nl-green-dark); font-weight:600;">Scopri come attivare una fornitura</a></p>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container footer-bottom" style="border-top:none; padding-top:0;">
+    <span>© 2026 NovaLuce Energia S.p.A. — Sito demo, nessun dato reale.</span>
+    <span><a href="#">Privacy</a> · <a href="#">Cookie</a> · <a href="#">Termini</a></span>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Diventa Cliente | NovaLuce Energia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="navbar container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" fill="#fff"/></svg>
+      </span>
+      <span class="brand-name">NovaLuce<span>Energia</span></span>
+    </a>
+    <button class="nav-toggle" aria-label="Apri menu"><i class="bi bi-list"></i></button>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="diventa-cliente.html" class="active">Diventa Cliente</a>
+      <a href="area-clienti.html">Area Clienti</a>
+      <div class="nav-cta">
+        <a href="area-clienti.html" class="btn btn-outline-dark btn-sm"><i class="bi bi-person-circle"></i> Accedi</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="page-header">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Diventa Cliente</div>
+    <span class="eyebrow">Nuove forniture</span>
+    <h1>Diventa Cliente NovaLuce Energia</h1>
+    <p>Scegli la procedura corretta per la tua situazione: ogni richiesta avvia un percorso guidato di firma digitale, senza bisogno di registrazione.</p>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="section-head" style="max-width:760px;">
+      <span class="eyebrow">Procedure disponibili</span>
+      <h2>Seleziona il servizio che ti interessa</h2>
+      <p>Ogni scheda avvia un percorso Docusign dedicato alla procedura scelta. Al termine della compilazione riceverai conferma via email.</p>
+    </div>
+
+    <div class="service-grid">
+
+      <div class="service-card prospect" id="switch">
+        <span class="service-tag">Fornitura attiva altrove</span>
+        <div class="service-icon"><i class="bi bi-shuffle"></i></div>
+        <h3>Switch</h3>
+        <span class="en-title">Supplier Change</span>
+        <p class="desc">Passa a NovaLuce Energia mantenendo lo stesso punto di fornitura, senza interruzioni del servizio.</p>
+        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="switch" data-service-label="Switch (Supplier Change)">Avvia procedura <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="service-card prospect" id="voltura-contestuale">
+        <span class="service-tag">Cambio intestatario</span>
+        <div class="service-icon"><i class="bi bi-people"></i></div>
+        <h3>Voltura Contestuale</h3>
+        <span class="en-title">Simultaneous Holder Change + Switch</span>
+        <p class="desc">Cambia l'intestatario del contratto e passa a NovaLuce Energia in un'unica procedura.</p>
+        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="voltura-contestuale" data-service-label="Voltura Contestuale (Simultaneous Holder Change + Switch)">Avvia procedura <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="service-card prospect" id="allaccio">
+        <span class="service-tag">Nuovo punto</span>
+        <div class="service-icon"><i class="bi bi-plug"></i></div>
+        <h3>Allaccio</h3>
+        <span class="en-title">New Connection</span>
+        <p class="desc">Richiedi un nuovo allacciamento alla rete elettrica o del gas per un immobile mai servito prima.</p>
+        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="allaccio" data-service-label="Allaccio (New Connection)">Avvia procedura <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="service-card prospect" id="prima-attivazione">
+        <span class="service-tag">Punto mai attivo</span>
+        <div class="service-icon"><i class="bi bi-lightning-charge"></i></div>
+        <h3>Prima Attivazione</h3>
+        <span class="en-title">First Activation</span>
+        <p class="desc">Attiva per la prima volta la fornitura di luce o gas su un punto già allacciato ma mai attivato.</p>
+        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="prima-attivazione" data-service-label="Prima Attivazione (First Activation)">Avvia procedura <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="service-card prospect" id="business-piva">
+        <span class="service-tag">Aziende</span>
+        <div class="service-icon"><i class="bi bi-briefcase"></i></div>
+        <h3>Attivazione Contratto Business (P.IVA)</h3>
+        <span class="en-title">Business/VAT Contract Activation</span>
+        <p class="desc">Attiva una fornitura dedicata alla tua azienda o Partita IVA, con condizioni pensate per il business.</p>
+        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="business-piva" data-service-label="Attivazione Contratto Business - P.IVA (Business/VAT Contract Activation)">Avvia procedura <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="service-card prospect" id="subentro">
+        <span class="service-tag">Nuovo occupante</span>
+        <div class="service-icon"><i class="bi bi-house-door"></i></div>
+        <h3>Subentro</h3>
+        <span class="en-title">Meter Reactivation for New Occupant</span>
+        <p class="desc">Riattiva il contatore a tuo nome subentrando in un immobile senza contratto attivo.</p>
+        <a href="#" class="btn btn-primary btn-sm docusign-link" data-service="subentro" data-service-label="Subentro (Meter Reactivation for New Occupant)">Avvia procedura <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="bg-grey">
+  <div class="container">
+    <div class="cta-banner" style="background:linear-gradient(120deg, var(--nl-blue), var(--nl-blue-light));">
+      <div>
+        <h2>Sei già cliente NovaLuce Energia?</h2>
+        <p>Accedi all'Area Clienti per gestire autolettura, bolletta web, voltura e altri servizi del tuo contratto.</p>
+      </div>
+      <a href="area-clienti.html" class="btn btn-outline"><i class="bi bi-box-arrow-in-right"></i> Accedi all'Area Clienti</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-bottom" style="border-top:none; padding-top:0;">
+    <span>© 2026 NovaLuce Energia S.p.A. — Sito demo, nessun dato reale.</span>
+    <span><a href="#">Privacy</a> · <a href="#">Cookie</a> · <a href="#">Termini</a></span>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>

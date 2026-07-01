@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>I tuoi servizi | Area Clienti | NovaLuce Energia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body onload="nlGuardDashboard()">
+
+<header class="site-header">
+  <nav class="navbar container">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8Z" fill="#fff"/></svg>
+      </span>
+      <span class="brand-name">NovaLuce<span>Energia</span></span>
+    </a>
+    <button class="nav-toggle" aria-label="Apri menu"><i class="bi bi-list"></i></button>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="diventa-cliente.html">Diventa Cliente</a>
+      <a href="area-clienti-dashboard.html" class="active">Area Clienti</a>
+      <div class="nav-cta">
+        <a href="#" class="btn btn-outline-dark btn-sm" onclick="nlLogout(); return false;"><i class="bi bi-box-arrow-right"></i> Esci</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="dashboard-topbar">
+  <div class="container">
+    <div class="user-chip">
+      <span class="user-avatar" id="dashboard-user-initials">MR</span>
+      <div>
+        <span class="name" id="dashboard-user-name">Mario Rossi</span><br />
+        <span class="meta" id="dashboard-user-email">cliente@novaluce.it</span>
+      </div>
+    </div>
+    <a href="#" class="btn btn-outline-dark btn-sm" onclick="nlLogout(); return false;"><i class="bi bi-box-arrow-right"></i> Esci</a>
+  </div>
+</div>
+
+<section style="padding-top:44px;">
+  <div class="container">
+    <div class="section-head" style="text-align:left; margin:0 0 36px;">
+      <span class="eyebrow">Area Clienti</span>
+      <h2>I servizi della tua fornitura</h2>
+      <p>Seleziona l'operazione che vuoi effettuare. Le richieste vengono gestite in autonomia, in pochi minuti.</p>
+    </div>
+
+    <div class="service-grid">
+
+      <div class="service-card" id="autolettura">
+        <span class="service-tag">Contatore</span>
+        <div class="service-icon"><i class="bi bi-speedometer2"></i></div>
+        <h3>Autolettura</h3>
+        <span class="en-title">Self-Meter Reading Submission</span>
+        <p class="desc">Comunica la lettura del tuo contatore per ricevere bollette basate sui consumi reali.</p>
+        <a href="#" class="btn btn-primary btn-sm service-action" data-service-label="Autolettura">Richiedi <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="service-card" id="domiciliazione-sepa">
+        <span class="service-tag">Pagamenti</span>
+        <div class="service-icon"><i class="bi bi-bank"></i></div>
+        <h3>Domiciliazione SEPA</h3>
+        <span class="en-title">SEPA Direct Debit Setup/Change</span>
+        <p class="desc">Attiva o modifica l'addebito automatico delle bollette sul tuo conto corrente.</p>
+        <a href="#" class="btn btn-primary btn-sm service-action" data-service-label="Domiciliazione SEPA">Richiedi <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="service-card" id="bolletta-web">
+        <span class="service-tag">Fatturazione</span>
+        <div class="service-icon"><i class="bi bi-envelope-paper-heart"></i></div>
+        <h3>Bolletta Web</h3>
+        <span class="en-title">Paperless Billing Enrollment</span>
+        <p class="desc">Passa alla bolletta digitale: ricevi le fatture via email, senza carta.</p>
+        <a href="#" class="btn btn-primary btn-sm service-action" data-service-label="Bolletta Web">Richiedi <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="service-card" id="variazione-recapito">
+        <span class="service-tag">Anagrafica</span>
+        <div class="service-icon"><i class="bi bi-person-lines-fill"></i></div>
+        <h3>Variazione Recapito</h3>
+        <span class="en-title">Change of Contact Details</span>
+        <p class="desc">Aggiorna indirizzo, email o numero di telefono associati al tuo contratto.</p>
+        <a href="#" class="btn btn-primary btn-sm service-action" data-service-label="Variazione Recapito">Richiedi <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="service-card" id="estratto-conto">
+        <span class="service-tag">Documenti</span>
+        <div class="service-icon"><i class="bi bi-file-earmark-text"></i></div>
+        <h3>Estratto Conto</h3>
+        <span class="en-title">Account Statement Request</span>
+        <p class="desc">Richiedi il riepilogo dei pagamenti e della situazione contabile del tuo contratto.</p>
+        <a href="#" class="btn btn-primary btn-sm service-action" data-service-label="Estratto Conto">Richiedi <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="service-card" id="conferma-pagamento">
+        <span class="service-tag">Pagamenti</span>
+        <div class="service-icon"><i class="bi bi-check-circle"></i></div>
+        <h3>Conferma Pagamento Bolletta</h3>
+        <span class="en-title">Payment Confirmation (reminder invoice)</span>
+        <p class="desc">Hai ricevuto un sollecito ma hai già pagato? Invia la conferma del pagamento.</p>
+        <a href="#" class="btn btn-primary btn-sm service-action" data-service-label="Conferma Pagamento Bolletta">Richiedi <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="service-card" id="rimborso-bonifico">
+        <span class="service-tag">Pagamenti</span>
+        <div class="service-icon"><i class="bi bi-cash-coin"></i></div>
+        <h3>Rimborso con Bonifico</h3>
+        <span class="en-title">Refund Request (bank transfer)</span>
+        <p class="desc">Richiedi il rimborso di un credito residuo tramite bonifico bancario.</p>
+        <a href="#" class="btn btn-primary btn-sm service-action" data-service-label="Rimborso con Bonifico">Richiedi <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="service-card" id="voltura">
+        <span class="service-tag">Contratto</span>
+        <div class="service-icon"><i class="bi bi-arrow-left-right"></i></div>
+        <h3>Voltura</h3>
+        <span class="en-title">Change of Contract Holder</span>
+        <p class="desc">Trasferisci l'intestazione del contratto a un altro nominativo, mantenendo il POD/PDR.</p>
+        <a href="#" class="btn btn-primary btn-sm service-action" data-service-label="Voltura">Richiedi <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+      <div class="service-card" id="disdetta-recesso">
+        <span class="service-tag">Contratto</span>
+        <div class="service-icon"><i class="bi bi-x-circle"></i></div>
+        <h3>Disdetta / Recesso</h3>
+        <span class="en-title">Contract Termination</span>
+        <p class="desc">Richiedi la chiusura o il recesso dal contratto di fornitura in essere.</p>
+        <a href="#" class="btn btn-primary btn-sm service-action" data-service-label="Disdetta / Recesso">Richiedi <i class="bi bi-arrow-right"></i></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer mt-40">
+  <div class="container footer-bottom" style="border-top:none; padding-top:0;">
+    <span>© 2026 NovaLuce Energia S.p.A. — Sito demo, nessun dato reale.</span>
+    <span><a href="#">Privacy</a> · <a href="#">Cookie</a> · <a href="#">Termini</a></span>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
