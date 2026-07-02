@@ -44,11 +44,26 @@ function nlToast(message) {
   }, 5000);
 }
 
-// ---- Prospect area: Docusign trigger placeholders --------------------------
+// ---- Prospect area: Docusign trigger links ---------------------------------
 // Each button below carries data-service / data-href. Once a Docusign
 // Workflow Builder trigger link exists for a service, replace the href="#"
 // on the matching <a class="docusign-link" data-service="..."> element in
 // diventa-cliente.html with the real trigger URL — no JS changes required.
+// Real links open in a small centered popup window instead of a full tab,
+// so the webform reads like an embedded step rather than a page takeover.
+function nlOpenDocusignPopup(url) {
+  var width = 560;
+  var height = 760;
+  var left = Math.max(0, (screen.width - width) / 2);
+  var top = Math.max(0, (screen.height - height) / 2);
+  window.open(
+    url,
+    "novaLuceDocusignForm",
+    "width=" + width + ",height=" + height + ",left=" + left + ",top=" + top +
+      ",menubar=no,toolbar=no,location=no,status=no,scrollbars=yes,resizable=yes"
+  );
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   var docusignLinks = document.querySelectorAll(".docusign-link");
   docusignLinks.forEach(function (link) {
@@ -58,6 +73,9 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
         var service = link.getAttribute("data-service-label") || "";
         nlToast(nlT("toast.docusignNotConfigured", { service: "<strong>" + service + "</strong>" }));
+      } else {
+        e.preventDefault();
+        nlOpenDocusignPopup(href);
       }
     });
   });
