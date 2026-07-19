@@ -4,8 +4,12 @@ Non usa modelli ML: lavora sul segnale filtrato in banda (1-4kHz, dove
 si concentra l'abbaio del Chihuahua secondo l'analisi spettrale fatta
 sui file di test) e cerca picchi di energia sostenuti rispetto al
 rumore di fondo locale, poi li conferma controllando che la forma
-spettrale assomigli a un abbaio (frequenza dominante ed energia in
-banda) invece che a un rumore a banda larga (treno, traffico).
+spettrale assomigli a un abbaio: frequenza dominante ed energia in
+banda per scartare rumore a banda larga (treno, traffico), e
+concentrazione dell'energia attorno al picco per scartare transienti
+a banda larga entro la stessa finestra (es. passi/ciabatte), che hanno
+energia in banda ma dispersa su tutto lo spettro invece che in un
+picco armonico stretto tipico del bark.
 """
 
 from dataclasses import dataclass
@@ -24,6 +28,7 @@ class Candidate:
     peak_rms: float
     dominant_freq_hz: float
     band_energy_ratio: float
+    peak_concentration: float
 
 
 def _rms_envelope(audio, sr, frame_length_s=0.05, hop_length_s=0.01):
@@ -50,10 +55,16 @@ def _spectral_shape(raw_segment, filtered_segment, sr, band=(1000.0, 4000.0)):
     band_mask = (freqs >= band[0]) & (freqs <= band[1])
     band_energy_ratio = float(np.sum(raw_spectrum[band_mask] ** 2) / total_energy)
 
-    filtered_spectrum = np.abs(np.fft.rfft(filtered_segment))
-    dominant_freq = float(freqs[np.argmax(filtered_spectrum)])
+    filtered_power = np.abs(np.fft.rfft(filtered_segment)) ** 2
+    dominant_freq = float(freqs[np.argmax(filtered_power)])
 
-    return dominant_freq, band_energy_ratio
+    filtered_total = np.sum(filtered_power)
+    peak_concentration = 0.0
+    if filtered_total > 0:
+        near_peak_mask = np.abs(freqs - dominant_freq) <= 150.0
+        peak_concentration = float(np.sum(filtered_power[near_peak_mask]) / filtered_total)
+
+    return dominant_freq, band_energy_ratio, peak_concentration
 
 
 def detect_candidates(
@@ -69,6 +80,7 @@ def detect_candidates(
     min_dominant_freq_hz=700.0,
     max_dominant_freq_hz=3500.0,
     min_band_energy_ratio=0.35,
+    min_peak_concentration=0.35,
 ):
     filtered = bandpass_filter(audio, sr, band[0], band[1])
     rms, times, hop_length_s = _rms_envelope(filtered, sr)
@@ -88,15 +100,19 @@ def detect_candidates(
         end_sample = min(len(audio), int(end * sr))
         raw_segment = audio[start_sample:end_sample]
         filtered_segment = filtered[start_sample:end_sample]
-        dominant_freq, band_energy_ratio = _spectral_shape(raw_segment, filtered_segment, sr, band)
+        dominant_freq, band_energy_ratio, peak_concentration = _spectral_shape(
+            raw_segment, filtered_segment, sr, band
+        )
 
         if not (min_dominant_freq_hz <= dominant_freq <= max_dominant_freq_hz):
             continue
         if band_energy_ratio < min_band_energy_ratio:
             continue
+        if peak_concentration < min_peak_concentration:
+            continue
 
         peak_rms = float(np.max(rms[(times >= start) & (times <= end)])) if end > start else 0.0
-        candidates.append(Candidate(start, end, peak_rms, dominant_freq, band_energy_ratio))
+        candidates.append(Candidate(start, end, peak_rms, dominant_freq, band_energy_ratio, peak_concentration))
 
     return candidates
 

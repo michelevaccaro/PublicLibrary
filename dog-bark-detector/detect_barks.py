@@ -45,9 +45,14 @@ def build_parser():
     p.add_argument("--min-dominant-freq", type=float, default=700.0, help="Frequenza dominante minima accettata (Hz)")
     p.add_argument("--max-dominant-freq", type=float, default=3500.0, help="Frequenza dominante massima accettata (Hz)")
     p.add_argument("--min-band-energy-ratio", type=float, default=0.35, help="Frazione minima di energia in banda")
+    p.add_argument("--min-peak-concentration", type=float, default=0.35,
+                   help="Frazione minima di energia concentrata attorno al picco (scarta rumori a banda larga tipo passi)")
 
     p.add_argument("--use-yamnet", action="store_true", help="Conferma i candidati con YAMNet (richiede tensorflow)")
     p.add_argument("--yamnet-threshold", type=float, default=0.1, help="Soglia di confidenza minima per YAMNet")
+
+    p.add_argument("--normalize-dbfs", type=float, default=-1.0, help="Picco target (dBFS) di normalizzazione dell'output")
+    p.add_argument("--no-normalize", action="store_true", help="Disabilita la normalizzazione del volume in output")
 
     return p
 
@@ -97,11 +102,12 @@ def main():
             min_dominant_freq_hz=args.min_dominant_freq,
             max_dominant_freq_hz=args.max_dominant_freq,
             min_band_energy_ratio=args.min_band_energy_ratio,
+            min_peak_concentration=args.min_peak_concentration,
         )
         print(f"candidati grezzi (energia+spettro): {len(candidates)}")
         for c in candidates:
             print(f"  [{c.start:7.2f}s -> {c.end:7.2f}s] freq_dom={c.dominant_freq_hz:6.0f}Hz "
-                  f"band_ratio={c.band_energy_ratio:.2f} rms={c.peak_rms:.4f}")
+                  f"band_ratio={c.band_energy_ratio:.2f} concentration={c.peak_concentration:.2f} rms={c.peak_rms:.4f}")
 
         if args.use_yamnet and candidates:
             print("conferma con YAMNet...")
@@ -125,7 +131,8 @@ def main():
         return
 
     segments_dir = Path(args.output).with_suffix("") if args.export_segments else None
-    report = extract_and_concatenate(sources, args.output, segments_dir=segments_dir)
+    normalize_target = None if args.no_normalize else args.normalize_dbfs
+    report = extract_and_concatenate(sources, args.output, segments_dir=segments_dir, normalize_target_dbfs=normalize_target)
     print(f"\nOutput scritto: {args.output}")
     print(f"Report: {Path(args.output).with_suffix('')}_report.csv / .json / _labels.txt")
     print(f"Segmenti totali nel file finale: {len(report)}")

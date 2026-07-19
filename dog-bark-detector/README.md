@@ -17,10 +17,16 @@ il rilevatore di default funziona così:
 2. **Energia RMS** sul segnale filtrato, confrontata con una soglia adattiva
    calcolata sul rumore di fondo locale (percentile mobile).
 3. **Conferma di forma spettrale**: per ogni candidato controlla che la
-   frequenza dominante sia in un range plausibile per un abbaio e che una
+   frequenza dominante sia in un range plausibile per un abbaio, che una
    quota sufficiente dell'energia totale sia nella banda 1000-4000 Hz
-   (scarta rumori a banda larga come treni/traffico che superano la sola
-   soglia di energia).
+   (scarta rumori a banda larga come treni/traffico), e che l'energia sia
+   concentrata in un picco stretto attorno alla frequenza dominante invece
+   che dispersa su tutta la banda (scarta transienti a banda larga come
+   passi/ciabatte, che superano la soglia di energia ma non hanno la forma
+   armonica di un abbaio).
+4. **Normalizzazione del volume** sull'output finale (default: picco a
+   -1dBFS), perché le registrazioni fatte con headroom (es. -19dB di picco
+   per evitare clipping) risultano altrimenti troppo silenziose da riascoltare.
 
 YAMNet resta disponibile come **conferma opzionale** (`--use-yamnet`) per
 scartare ulteriori falsi positivi, ma non è necessario di default.
@@ -73,6 +79,9 @@ Output generati accanto al file indicato con `-o`:
 | `--band` | 1000-4000 | Banda di frequenza dell'abbaio |
 | `--threshold-factor` | 3.0 | Quanto deve superare il rumore di fondo locale per contare come candidato |
 | `--min-band-energy-ratio` | 0.35 | Frazione minima di energia nella banda per confermare un candidato |
+| `--min-peak-concentration` | 0.35 | Frazione minima di energia concentrata attorno al picco (scarta rumori a banda larga tipo passi) |
+| `--normalize-dbfs` | -1.0 | Picco target (dBFS) di normalizzazione del volume in output |
+| `--no-normalize` | off | Disabilita la normalizzazione del volume |
 | `--use-yamnet` | off | Conferma aggiuntiva con YAMNet (richiede tensorflow) |
 
 Se il rilevamento perde abbai reali: abbassa `--threshold-factor` o

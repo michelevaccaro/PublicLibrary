@@ -25,7 +25,10 @@ def _to_mono_if_needed(data, target_channels):
     return np.repeat(np.mean(data, axis=1, keepdims=True), target_channels, axis=1)
 
 
-def extract_and_concatenate(sources, output_path, segments_dir=None, target_sr=None, target_channels=1):
+def extract_and_concatenate(
+    sources, output_path, segments_dir=None, target_sr=None, target_channels=1,
+    normalize_target_dbfs=-1.0,
+):
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     if segments_dir is not None:
@@ -33,6 +36,7 @@ def extract_and_concatenate(sources, output_path, segments_dir=None, target_sr=N
         segments_dir.mkdir(parents=True, exist_ok=True)
 
     chunks = []
+    clip_names = []
     report_rows = []
     output_offset_s = 0.0
     segment_index = 0
@@ -56,10 +60,7 @@ def extract_and_concatenate(sources, output_path, segments_dir=None, target_sr=N
             segment_index += 1
             duration_s = len(data) / sr
 
-            if segments_dir is not None:
-                clip_name = f"{segment_index:03d}_{Path(path).stem}_{seq.start:.1f}-{seq.end:.1f}.wav"
-                sf.write(segments_dir / clip_name, data, sr)
-
+            clip_names.append(f"{segment_index:03d}_{Path(path).stem}_{seq.start:.1f}-{seq.end:.1f}.wav")
             report_rows.append({
                 "segment_index": segment_index,
                 "source_file": str(path),
@@ -78,11 +79,30 @@ def extract_and_concatenate(sources, output_path, segments_dir=None, target_sr=N
         return report_rows
 
     final_sr = target_sr or sf.info(sources[0]["path"]).samplerate
+
+    gain = _normalization_gain(chunks, normalize_target_dbfs)
+    if gain != 1.0:
+        chunks = [np.clip(chunk * gain, -1.0, 1.0) for chunk in chunks]
+
+    if segments_dir is not None:
+        for clip_name, data in zip(clip_names, chunks):
+            sf.write(segments_dir / clip_name, data, final_sr, subtype="PCM_16")
+
     concatenated = np.concatenate(chunks, axis=0)
-    sf.write(output_path, concatenated, final_sr)
+    sf.write(output_path, concatenated, final_sr, subtype="PCM_16")
 
     _write_reports(report_rows, output_path)
     return report_rows
+
+
+def _normalization_gain(chunks, target_dbfs):
+    if target_dbfs is None:
+        return 1.0
+    peak = max((float(np.max(np.abs(chunk))) for chunk in chunks if chunk.size), default=0.0)
+    if peak <= 0:
+        return 1.0
+    target_peak = 10 ** (target_dbfs / 20.0)
+    return target_peak / peak
 
 
 def _write_reports(report_rows, output_path):
