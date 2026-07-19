@@ -2,30 +2,13 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<title>AudioDetect</title>
+<title>Dog Bark Detector</title>
 <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 <main>
-  <h1>AudioDetect</h1>
-  <p class="subtitle">Analizza tutti i file WAV di una cartella OneDrive e produce un unico file con gli spezzoni identificati.</p>
-
-  {% if not onedrive_configured %}
-  <section id="login-section" class="error-box">
-    <p>OneDrive non è ancora configurato su questo server: mancano le variabili
-    d'ambiente <code>ONEDRIVE_CLIENT_ID</code> / <code>ONEDRIVE_CLIENT_SECRET</code>
-    (e <code>ONEDRIVE_TENANT_ID</code>). Vanno aggiunte dalla scheda "Environment"
-    del servizio su Render.</p>
-  </section>
-  {% elif not logged_in %}
-  <section id="login-section">
-    <p>Per iniziare, collega il tuo account OneDrive.</p>
-    <a href="/auth/login" class="button-link">Connetti OneDrive</a>
-  </section>
-  {% else %}
-  <section id="account-section">
-    <p class="status ok">OneDrive collegato. <a href="/auth/logout">Disconnetti</a></p>
-  </section>
+  <h1>Rilevatore di abbai</h1>
+  <p class="subtitle">Analizza tutti i file WAV di una cartella e produce un unico file con gli spezzoni identificati.</p>
 
   <form id="analyze-form">
     <label for="sound-type">Tipo di suono da riconoscere</label>
@@ -37,14 +20,12 @@
       {% endfor %}
     </select>
 
-    <label for="folder">Cartella su OneDrive</label>
-    <input type="text" id="folder" name="folder" placeholder="es. Audio oppure Documenti/Registrazioni" autocomplete="off">
-    <p class="hint">Percorso della cartella dentro il tuo OneDrive (come appare nell'app OneDrive), non un percorso del PC.</p>
+    <label for="folder">Cartella sorgente</label>
+    <input type="text" id="folder" name="folder" placeholder="es. C:\Users\miche\OneDrive\Audio" autocomplete="off">
     <p id="folder-status" class="status"></p>
 
     <button type="submit" id="analyze-btn" disabled>Analizza</button>
   </form>
-  {% endif %}
 
   <section id="result" class="hidden">
     <h2>Risultato</h2>

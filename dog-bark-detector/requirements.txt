@@ -4,10 +4,10 @@ librosa>=0.10
 soundfile>=0.12
 noisereduce>=3.0
 flask>=3.0
-msal>=1.28
-requests>=2.31
-gunicorn>=22.0
 
 # Facoltativi, servono solo con --use-yamnet
 tensorflow>=2.14
 tensorflow-hub>=0.15
+
+# Facoltativi, servono solo per l'integrazione OneDrive/hosting cloud
+# (webapp/app.py locale non ne ha bisogno): vedi requirements-onedrive.txt
