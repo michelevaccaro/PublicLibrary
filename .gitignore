@@ -45,3 +45,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Secrets / local caches (dog-bark-detector OneDrive integration)
+.token_cache.bin
+.env

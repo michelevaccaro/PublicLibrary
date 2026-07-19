@@ -4,6 +4,7 @@ librosa>=0.10
 soundfile>=0.12
 noisereduce>=3.0
 flask>=3.0
+msal>=1.28
 
 # Facoltativi, servono solo con --use-yamnet
 tensorflow>=2.14
