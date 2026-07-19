@@ -34,11 +34,23 @@ def index():
         {"id": key, "label": cfg["label"], "available": cfg["available"]}
         for key, cfg in SOUND_TYPES.items()
     ]
-    return render_template("index.html", sound_types=sound_types, logged_in=onedrive_auth.is_logged_in())
+    return render_template(
+        "index.html",
+        sound_types=sound_types,
+        logged_in=onedrive_auth.is_logged_in(),
+        onedrive_configured=onedrive_auth.is_configured(),
+    )
 
 
 @app.route("/auth/login")
 def auth_login():
+    if not onedrive_auth.is_configured():
+        return (
+            "OneDrive non ancora configurato su questo server: mancano le variabili "
+            "d'ambiente ONEDRIVE_CLIENT_ID / ONEDRIVE_CLIENT_SECRET (e ONEDRIVE_TENANT_ID). "
+            "Aggiungile dalla scheda Environment del servizio su Render.",
+            503,
+        )
     state = secrets.token_hex(16)
     session["oauth_state"] = state
     redirect_uri = url_for("auth_callback", _external=True)

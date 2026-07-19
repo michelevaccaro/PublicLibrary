@@ -16,7 +16,7 @@ import os
 
 import msal
 
-SCOPES = ["Files.ReadWrite", "offline_access"]
+SCOPES = ["Files.ReadWrite"]  # offline_access è aggiunto automaticamente da MSAL per le confidential client app
 TOKEN_CACHE_PATH = os.path.join(os.path.dirname(__file__), "..", ".token_cache.bin")
 
 
@@ -34,12 +34,25 @@ def _save_cache(cache):
             f.write(cache.serialize())
 
 
+class NotConfiguredError(RuntimeError):
+    pass
+
+
+def is_configured():
+    return bool(os.environ.get("ONEDRIVE_CLIENT_ID")) and bool(os.environ.get("ONEDRIVE_CLIENT_SECRET"))
+
+
 def _authority():
     tenant_id = os.environ.get("ONEDRIVE_TENANT_ID", "common")
     return f"https://login.microsoftonline.com/{tenant_id}"
 
 
 def _build_app(cache=None):
+    if not is_configured():
+        raise NotConfiguredError(
+            "OneDrive non configurato sul server: mancano le variabili d'ambiente "
+            "ONEDRIVE_CLIENT_ID / ONEDRIVE_CLIENT_SECRET."
+        )
     return msal.ConfidentialClientApplication(
         client_id=os.environ["ONEDRIVE_CLIENT_ID"],
         client_credential=os.environ["ONEDRIVE_CLIENT_SECRET"],
@@ -65,7 +78,9 @@ def acquire_token_by_auth_code(code, redirect_uri):
 
 def get_access_token():
     """Ritorna un access token valido (silenziosamente rinnovato se serve),
-    o None se non c'è nessun login salvato."""
+    o None se non c'è nessun login salvato (o se OneDrive non è configurato)."""
+    if not is_configured():
+        return None
     cache = _load_cache()
     app = _build_app(cache)
     accounts = app.get_accounts()

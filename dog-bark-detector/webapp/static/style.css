@@ -45,6 +45,21 @@ button:disabled {
 .status.ok { color: #16a34a; }
 .status.bad { color: #dc2626; }
 
+.hint { color: #666; font-size: 0.85rem; margin: 0.2rem 0 0.5rem; }
+
+.button-link {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.7rem 1.2rem;
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+#account-section { margin-top: 1rem; }
+
 .hidden { display: none; }
 
 #result { margin-top: 2rem; padding: 1rem; background: #f5f5f5; border-radius: 6px; }
