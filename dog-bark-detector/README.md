@@ -44,11 +44,21 @@ file intero.
 
 Il registratore, fermo e non direzionale, cattura molto più rumore di fondo
 di quanto se ne percepisca a orecchio dalla propria posizione, dove l'abbaio
-risulta relativamente più presente. `--enhance` taglia il rumore sotto
-`--enhance-highpass` (default 400 Hz, sotto la frequenza dell'abbaio) e
-aggiunge un boost parallelo sulla banda `--enhance-boost-band` (default
-1200-2500 Hz, `--enhance-boost-db` default +6dB) invece di isolare l'abbaio
-con un filtro stretto, che lo farebbe suonare innaturale.
+risulta relativamente più presente. `--enhance` combina due passaggi:
+
+1. **EQ**: taglia il rumore sotto `--enhance-highpass` (default 600 Hz,
+   sotto la frequenza dell'abbaio) e aggiunge un boost parallelo sulla banda
+   `--enhance-boost-band` (default 1200-2500 Hz, `--enhance-boost-db`
+   default +9dB) invece di isolare l'abbaio con un filtro stretto, che lo
+   farebbe suonare innaturale.
+2. **Gate di rumore** (attivo di default con `--enhance`, disattivabile con
+   `--no-gate`, oppure usabile da solo con `--gate`): usa i timestamp esatti
+   di ogni abbaio già noti dal rilevamento per abbassare di
+   `--gate-noise-floor-db` (default -20dB) tutto ciò che non è abbaio —
+   padding e pause tra un abbaio e l'altro nella stessa sequenza — con
+   transizioni ammorbidite (`--gate-attack`, default 0.15s) per non
+   introdurre click. Sul file di test porta il contrasto abbaio/rumore da
+   1.1dB (nessuna elaborazione) a 5.0dB (solo EQ) a 24.8dB (EQ + gate).
 
 ## Installazione
 
@@ -104,10 +114,14 @@ Output generati accanto al file indicato con `-o`:
 | `--use-yamnet` | off | Conferma aggiuntiva con YAMNet (richiede tensorflow) |
 | `--block-seconds` | 600.0 | Dimensione dei blocchi letti dal disco durante l'analisi |
 | `--block-overlap-seconds` | 10.0 | Margine di contesto tra un blocco e l'altro |
-| `--enhance` | off | Esalta l'abbaio rispetto al rumore di fondo nell'output |
-| `--enhance-highpass` | 400.0 | Frequenza (Hz) sotto cui tagliare il rumore di fondo (con `--enhance`) |
+| `--enhance` | off | Esalta l'abbaio rispetto al rumore di fondo nell'output (EQ + gate) |
+| `--enhance-highpass` | 600.0 | Frequenza (Hz) sotto cui tagliare il rumore di fondo (con `--enhance`) |
 | `--enhance-boost-band` | 1200-2500 | Banda da rinforzare (con `--enhance`) |
-| `--enhance-boost-db` | 6.0 | Guadagno (dB) applicato alla banda rinforzata (con `--enhance`) |
+| `--enhance-boost-db` | 9.0 | Guadagno (dB) applicato alla banda rinforzata (con `--enhance`) |
+| `--gate` | off | Abbassa il rumore fuori dalle finestre di abbaio (attivo di default con `--enhance`) |
+| `--no-gate` | off | Disabilita il gate anche con `--enhance` attivo |
+| `--gate-attack` | 0.15 | Margine (s) di apertura piena del gate attorno a ogni abbaio |
+| `--gate-noise-floor-db` | -20.0 | Attenuazione (dB) del rumore di fondo fuori dalle finestre di abbaio |
 
 Se il rilevamento perde abbai reali: abbassa `--threshold-factor` o
 `--min-band-energy-ratio`. Se prende troppi falsi positivi: alzali, oppure

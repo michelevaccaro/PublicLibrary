@@ -61,10 +61,18 @@ def build_parser():
 
     p.add_argument("--enhance", action="store_true",
                     help="Esalta l'abbaio rispetto al rumore di fondo (taglia sotto --enhance-highpass, "
-                         "rinforza la banda --enhance-boost-band)")
-    p.add_argument("--enhance-highpass", type=float, default=400.0, help="Frequenza (Hz) sotto cui tagliare il rumore di fondo")
+                         "rinforza la banda --enhance-boost-band). Attiva anche il gate di rumore, salvo --no-gate")
+    p.add_argument("--enhance-highpass", type=float, default=600.0, help="Frequenza (Hz) sotto cui tagliare il rumore di fondo")
     p.add_argument("--enhance-boost-band", type=parse_band, default="1200-2500", help="Banda da rinforzare, es. 1200-2500")
-    p.add_argument("--enhance-boost-db", type=float, default=6.0, help="Guadagno (dB) applicato alla banda rinforzata")
+    p.add_argument("--enhance-boost-db", type=float, default=9.0, help="Guadagno (dB) applicato alla banda rinforzata")
+
+    p.add_argument("--gate", action="store_true",
+                    help="Abbassa il rumore di fondo fuori dalle finestre di abbaio effettive (attivo di default con --enhance)")
+    p.add_argument("--no-gate", action="store_true", help="Disabilita il gate anche se --enhance è attivo")
+    p.add_argument("--gate-attack", type=float, default=0.15,
+                   help="Margine (s) di piena apertura del gate prima/dopo ogni abbaio, con transizione ammorbidita")
+    p.add_argument("--gate-noise-floor-db", type=float, default=-20.0,
+                   help="Attenuazione (dB) applicata al rumore di fondo fuori dalle finestre di abbaio")
 
     return p
 
@@ -150,9 +158,15 @@ def main():
         "boost_band": args.enhance_boost_band,
         "boost_gain_db": args.enhance_boost_db,
     }
+    gate_enabled = (args.gate or args.enhance) and not args.no_gate
+    gate_kwargs = {
+        "attack_s": args.gate_attack,
+        "noise_floor_db": args.gate_noise_floor_db,
+    }
     report = extract_and_concatenate(
         sources, args.output, segments_dir=segments_dir, normalize_target_dbfs=normalize_target,
         enhance=args.enhance, enhance_kwargs=enhance_kwargs,
+        gate=gate_enabled, gate_kwargs=gate_kwargs,
     )
     print(f"\nOutput scritto: {args.output}")
     print(f"Report: {Path(args.output).with_suffix('')}_report.csv / .json / _labels.txt")

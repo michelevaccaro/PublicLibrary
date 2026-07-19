@@ -8,7 +8,11 @@ class Sequence:
     start: float
     end: float
     bark_count: int
-    bark_starts: list
+    bark_windows: list  # [(start, end), ...] tempo assoluto nel file sorgente
+
+    @property
+    def bark_starts(self):
+        return [w[0] for w in self.bark_windows]
 
 
 def merge_and_pad(candidates, gap_threshold_s=5.0, padding_s=3.0, duration_s=None):
@@ -20,25 +24,25 @@ def merge_and_pad(candidates, gap_threshold_s=5.0, padding_s=3.0, duration_s=Non
     sequences = []
     current_start = events[0].start
     current_end = events[0].end
-    current_barks = [events[0].start]
+    current_windows = [(events[0].start, events[0].end)]
 
     for event in events[1:]:
         if event.start - current_end < gap_threshold_s:
             current_end = max(current_end, event.end)
-            current_barks.append(event.start)
+            current_windows.append((event.start, event.end))
         else:
-            sequences.append((current_start, current_end, current_barks))
+            sequences.append((current_start, current_end, current_windows))
             current_start, current_end = event.start, event.end
-            current_barks = [event.start]
-    sequences.append((current_start, current_end, current_barks))
+            current_windows = [(event.start, event.end)]
+    sequences.append((current_start, current_end, current_windows))
 
     padded = []
-    for start, end, barks in sequences:
+    for start, end, windows in sequences:
         padded_start = max(0.0, start - padding_s)
         padded_end = end + padding_s
         if duration_s is not None:
             padded_end = min(duration_s, padded_end)
-        padded.append(Sequence(padded_start, padded_end, len(barks), barks))
+        padded.append(Sequence(padded_start, padded_end, len(windows), windows))
 
     return _merge_overlaps(padded)
 
@@ -55,7 +59,7 @@ def _merge_overlaps(sequences):
                 last.start,
                 max(last.end, seq.end),
                 last.bark_count + seq.bark_count,
-                last.bark_starts + seq.bark_starts,
+                last.bark_windows + seq.bark_windows,
             )
         else:
             merged.append(seq)
