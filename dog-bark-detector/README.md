@@ -124,8 +124,14 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-`tensorflow` / `tensorflow-hub` (in requirements.txt) servono solo se usi
-`--use-yamnet`: puoi ometterli se non ti interessa quella modalità.
+`tensorflow` / `tensorflow-hub` servono solo per `--use-yamnet` e sono in
+un file a parte (`requirements-yamnet.txt`), perché tensorflow spesso non
+ha ancora una versione compatibile con le Python più recenti e farebbe
+fallire l'intera installazione anche per chi non usa YAMNet:
+
+```bash
+pip install -r requirements.txt -r requirements-yamnet.txt
+```
 
 ## Uso
 

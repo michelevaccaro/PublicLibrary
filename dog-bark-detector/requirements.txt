@@ -5,9 +5,10 @@ soundfile>=0.12
 noisereduce>=3.0
 flask>=3.0
 
-# Facoltativi, servono solo con --use-yamnet
-tensorflow>=2.14
-tensorflow-hub>=0.15
+# Facoltativi, servono solo con --use-yamnet: vedi requirements-yamnet.txt
+# (tenuti fuori da qui perché tensorflow spesso non ha ancora una versione
+# compatibile con le Python più recenti, e farebbe fallire l'intera
+# installazione anche per chi non usa YAMNet)
 
 # Facoltativi, servono solo per l'integrazione OneDrive/hosting cloud
 # (webapp/app.py locale non ne ha bisogno): vedi requirements-onedrive.txt

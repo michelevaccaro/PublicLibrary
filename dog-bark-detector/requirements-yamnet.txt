@@ -1,0 +1,7 @@
+# Dipendenze extra per la conferma opzionale --use-yamnet. Installa insieme
+# a requirements.txt solo se ti serve (tensorflow potrebbe non avere ancora
+# una versione compatibile con la tua Python più recente):
+#   pip install -r requirements.txt -r requirements-yamnet.txt
+
+tensorflow>=2.14
+tensorflow-hub>=0.15
