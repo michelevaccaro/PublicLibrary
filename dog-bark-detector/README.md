@@ -31,6 +31,25 @@ il rilevatore di default funziona così:
 YAMNet resta disponibile come **conferma opzionale** (`--use-yamnet`) per
 scartare ulteriori falsi positivi, ma non è necessario di default.
 
+## File grandi (anche >1GB)
+
+L'analisi non carica mai l'intero file in RAM: legge il WAV a blocchi
+(default 600s, configurabile con `--block-seconds`) con un margine di
+contesto tra un blocco e l'altro (`--block-overlap-seconds`, default 10s)
+per non perdere abbai a cavallo di un confine tra blocchi. Anche il taglio
+finale legge solo gli intervalli di tempo effettivamente da estrarre, mai il
+file intero.
+
+## Esaltare l'abbaio nell'output (`--enhance`)
+
+Il registratore, fermo e non direzionale, cattura molto più rumore di fondo
+di quanto se ne percepisca a orecchio dalla propria posizione, dove l'abbaio
+risulta relativamente più presente. `--enhance` taglia il rumore sotto
+`--enhance-highpass` (default 400 Hz, sotto la frequenza dell'abbaio) e
+aggiunge un boost parallelo sulla banda `--enhance-boost-band` (default
+1200-2500 Hz, `--enhance-boost-db` default +6dB) invece di isolare l'abbaio
+con un filtro stretto, che lo farebbe suonare innaturale.
+
 ## Installazione
 
 ```bash
@@ -83,6 +102,12 @@ Output generati accanto al file indicato con `-o`:
 | `--normalize-dbfs` | -1.0 | Picco target (dBFS) di normalizzazione del volume in output |
 | `--no-normalize` | off | Disabilita la normalizzazione del volume |
 | `--use-yamnet` | off | Conferma aggiuntiva con YAMNet (richiede tensorflow) |
+| `--block-seconds` | 600.0 | Dimensione dei blocchi letti dal disco durante l'analisi |
+| `--block-overlap-seconds` | 10.0 | Margine di contesto tra un blocco e l'altro |
+| `--enhance` | off | Esalta l'abbaio rispetto al rumore di fondo nell'output |
+| `--enhance-highpass` | 400.0 | Frequenza (Hz) sotto cui tagliare il rumore di fondo (con `--enhance`) |
+| `--enhance-boost-band` | 1200-2500 | Banda da rinforzare (con `--enhance`) |
+| `--enhance-boost-db` | 6.0 | Guadagno (dB) applicato alla banda rinforzata (con `--enhance`) |
 
 Se il rilevamento perde abbai reali: abbassa `--threshold-factor` o
 `--min-band-energy-ratio`. Se prende troppi falsi positivi: alzali, oppure

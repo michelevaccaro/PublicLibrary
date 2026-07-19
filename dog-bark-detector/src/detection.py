@@ -16,6 +16,7 @@ from dataclasses import dataclass
 
 import numpy as np
 import librosa
+import soundfile as sf
 from scipy.ndimage import percentile_filter
 
 from .filters import bandpass_filter
@@ -139,3 +140,49 @@ def _contiguous_regions(mask, times, min_duration_s, merge_gap_s):
             merged.append((start, end))
 
     return [(s, e) for s, e in merged if e - s >= min_duration_s]
+
+
+def detect_candidates_streaming(path, block_seconds=600.0, overlap_seconds=10.0, **detection_kwargs):
+    """Come detect_candidates ma legge il file a blocchi invece di caricarlo
+    tutto in memoria, per gestire registrazioni lunghe (anche >1GB).
+
+    Ogni blocco viene letto con un margine di contesto (overlap) prima e
+    dopo, necessario perché la soglia adattiva (floor_window_s) e i
+    candidati che attraversano il confine tra due blocchi richiedono un
+    po' di segnale extra per essere calcolati correttamente. I candidati
+    vengono poi deduplicati tenendo solo quelli il cui inizio ricade nella
+    porzione "core" (non di overlap) del blocco.
+    """
+    info = sf.info(path)
+    sr = info.samplerate
+    total_frames = info.frames
+    total_duration_s = total_frames / sr
+
+    block_frames = int(block_seconds * sr)
+    overlap_frames = int(overlap_seconds * sr)
+
+    all_candidates = []
+    start_frame = 0
+
+    while start_frame < total_frames:
+        read_start = max(0, start_frame - overlap_frames)
+        read_end = min(total_frames, start_frame + block_frames + overlap_frames)
+
+        data, _ = sf.read(path, start=read_start, frames=read_end - read_start, dtype="float32", always_2d=False)
+        if data.ndim > 1:
+            data = np.mean(data, axis=1)
+
+        block_offset_s = read_start / sr
+        core_start_s = start_frame / sr
+        core_end_s = min(total_frames, start_frame + block_frames) / sr
+
+        for candidate in detect_candidates(data, sr, **detection_kwargs):
+            global_start = candidate.start + block_offset_s
+            if core_start_s <= global_start < core_end_s:
+                candidate.start += block_offset_s
+                candidate.end += block_offset_s
+                all_candidates.append(candidate)
+
+        start_frame += block_frames
+
+    return all_candidates, sr, total_duration_s
