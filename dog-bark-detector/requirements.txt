@@ -5,6 +5,8 @@ soundfile>=0.12
 noisereduce>=3.0
 flask>=3.0
 msal>=1.28
+requests>=2.31
+gunicorn>=22.0
 
 # Facoltativi, servono solo con --use-yamnet
 tensorflow>=2.14
