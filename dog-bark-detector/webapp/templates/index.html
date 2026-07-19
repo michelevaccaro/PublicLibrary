@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Dog Bark Detector</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<main>
+  <h1>Rilevatore di abbai</h1>
+  <p class="subtitle">Analizza tutti i file WAV di una cartella e produce un unico file con gli spezzoni identificati.</p>
+
+  <form id="analyze-form">
+    <label for="sound-type">Tipo di suono da riconoscere</label>
+    <select id="sound-type" name="sound_type">
+      {% for st in sound_types %}
+      <option value="{{ st.id }}" {% if not st.available %}disabled{% endif %}>
+        {{ st.label }}{% if not st.available %} (non ancora disponibile){% endif %}
+      </option>
+      {% endfor %}
+    </select>
+
+    <label for="folder">Cartella sorgente</label>
+    <input type="text" id="folder" name="folder" placeholder="es. C:\Users\miche\OneDrive\Audio" autocomplete="off">
+    <p id="folder-status" class="status"></p>
+
+    <button type="submit" id="analyze-btn" disabled>Analizza</button>
+  </form>
+
+  <section id="result" class="hidden">
+    <h2>Risultato</h2>
+    <div id="result-summary"></div>
+    <pre id="result-log"></pre>
+  </section>
+
+  <section id="error" class="hidden error-box">
+    <p id="error-message"></p>
+  </section>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>

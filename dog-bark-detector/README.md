@@ -75,6 +75,47 @@ Stesso problema già visto con YAMNet. Da tenere in considerazione per un
 futuro filtro di riconoscimento/pulizia della voce umana, dove invece è
 probabilmente un'ottima scelta.
 
+## Web app locale
+
+Oltre alla CLI, `webapp/` contiene una piccola web app Flask pensata per
+l'uso quotidiano: analizza tutti i file WAV di una cartella e produce un
+unico file combinato, senza dover ricordare parametri da riga di comando.
+
+**Gira solo in locale sul tuo PC** — non è ospitata online, legge/scrive
+direttamente sul filesystem della macchina su cui la avvii (es. la cartella
+OneDrive già sincronizzata localmente). Non serve nessuna integrazione
+cloud/OAuth.
+
+Avvio:
+
+```bash
+source .venv/bin/activate
+python3 webapp/app.py
+```
+
+Poi apri `http://127.0.0.1:5000` nel browser.
+
+Uso:
+1. Scegli il tipo di suono dal menu a tendina — solo "Abbaiare di Cani" è
+   attivo per ora, "Parlato delle persone" è previsto ma non ancora
+   implementato (probabile futuro progetto basato su DeepFilterNet).
+2. Inserisci il percorso della cartella sorgente (es. la cartella OneDrive
+   con le registrazioni).
+3. Premi "Analizza". La web app:
+   - analizza tutti i `.wav` trovati direttamente nella cartella (non nelle
+     sottocartelle);
+   - crea un unico file combinato (`abbai_AAAAMMGG_HHMMSS.wav`, con
+     `--denoise` ed `--enhance` sempre attivi, la combinazione risultata
+     migliore nei test) nella cartella sorgente stessa;
+   - sposta tutti i file WAV analizzati (e i relativi report) in una
+     sottocartella `FileAnalizzati/` della cartella sorgente;
+   - alla fine la cartella sorgente contiene solo il file di output (più
+     la sottocartella `FileAnalizzati/` con gli originali).
+4. Se rilanci l'analisi sulla stessa cartella, i file di output già
+   generati vengono riconosciuti ed esclusi automaticamente dai file da
+   analizzare (non vengono ri-processati come se fossero nuove
+   registrazioni).
+
 ## Installazione
 
 ```bash
