@@ -53,9 +53,27 @@ con un filtro stretto, che lo farebbe suonare innaturale.
 È stato provato anche un gate di rumore (abbassare il volume fuori dalle
 finestre di abbaio rilevate) ma è stato **rimosso**: introduceva cambi di
 volume troppo bruschi e a tratti "cancellava" parzialmente l'abbaio,
-suonando innaturale. Se serve ridurre ulteriormente il rumore di fondo va
-cercato un approccio più graduale (es. riduzione spettrale continua) invece
-di un gate on/off nel tempo.
+suonando innaturale.
+
+## Ridurre il rumore di fondo (`--denoise`)
+
+Al posto del gate, riduzione del rumore continua e per-frequenza
+([noisereduce](https://pypi.org/project/noisereduce/), modalità non
+stazionaria — adatta a rumore variabile come treni/traffico). Combinabile
+con `--enhance` (prima denoise, poi EQ): sul file di test porta il
+contrasto abbaio/rumore a 10-16dB (a seconda della finestra di misura)
+contro 5dB della sola EQ, senza gli scatti di volume del gate.
+`--denoise-prop-decrease` (default 0.9) regola l'aggressività.
+
+**Provato e scartato**: [DeepFilterNet](https://github.com/rikorose/deepfilternet),
+rete neurale specializzata per rumore non stazionario, spesso citata come
+superiore ai metodi tradizionali. Sul nostro caso **cancella l'abbaio quasi
+del tutto insieme al rumore** (picco ridotto di ~50dB) perché è addestrata
+specificamente sulla voce umana — un abbaio acuto di Chihuahua è troppo
+diverso dal parlato per essere riconosciuto come segnale da preservare.
+Stesso problema già visto con YAMNet. Da tenere in considerazione per un
+futuro filtro di riconoscimento/pulizia della voce umana, dove invece è
+probabilmente un'ottima scelta.
 
 ## Installazione
 
@@ -115,6 +133,9 @@ Output generati accanto al file indicato con `-o`:
 | `--enhance-highpass` | 400.0 | Frequenza (Hz) sotto cui tagliare il rumore di fondo (con `--enhance`) |
 | `--enhance-boost-band` | 1200-2500 | Banda da rinforzare (con `--enhance`) |
 | `--enhance-boost-db` | 6.0 | Guadagno (dB) applicato alla banda rinforzata (con `--enhance`) |
+| `--denoise` | off | Riduce il rumore di fondo in modo continuo per-frequenza (noisereduce) |
+| `--denoise-prop-decrease` | 0.9 | Aggressività della riduzione rumore, 0-1 (con `--denoise`) |
+| `--denoise-stationary` | off | Usa il profilo di rumore stazionario invece di quello non-stazionario (con `--denoise`) |
 
 Se il rilevamento perde abbai reali: abbassa `--threshold-factor` o
 `--min-band-energy-ratio`. Se prende troppi falsi positivi: alzali, oppure

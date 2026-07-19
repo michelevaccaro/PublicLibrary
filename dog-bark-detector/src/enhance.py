@@ -30,3 +30,21 @@ def enhance_bark_presence(audio, sr, highpass_hz=400.0, boost_band=(1200.0, 2500
         out[:, ch] = highpassed + boost_gain * boosted
 
     return out[:, 0] if single_channel else out
+
+
+def denoise_background(audio, sr, prop_decrease=0.9, stationary=False):
+    """Riduzione del rumore di fondo continua e per-frequenza (noisereduce),
+    adatta a rumore non stazionario come treni/traffico. A differenza di un
+    gate nel tempo (provato e scartato: introduceva cambi di volume bruschi
+    e "cancellava" a tratti l'abbaio), qui l'attenuazione è graduale banda
+    per banda, quindi preserva meglio la forma naturale del suono."""
+    import noisereduce as nr
+
+    single_channel = audio.ndim == 1
+    data = audio[:, None] if single_channel else audio
+
+    out = np.zeros_like(data)
+    for ch in range(data.shape[1]):
+        out[:, ch] = nr.reduce_noise(y=data[:, ch], sr=sr, stationary=stationary, prop_decrease=prop_decrease)
+
+    return out[:, 0] if single_channel else out

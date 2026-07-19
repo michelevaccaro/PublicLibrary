@@ -66,6 +66,14 @@ def build_parser():
     p.add_argument("--enhance-boost-band", type=parse_band, default="1200-2500", help="Banda da rinforzare, es. 1200-2500")
     p.add_argument("--enhance-boost-db", type=float, default=6.0, help="Guadagno (dB) applicato alla banda rinforzata")
 
+    p.add_argument("--denoise", action="store_true",
+                    help="Riduce il rumore di fondo in modo continuo per-frequenza (noisereduce, non un gate nel "
+                         "tempo). Combinabile con --enhance: prima denoise, poi EQ")
+    p.add_argument("--denoise-prop-decrease", type=float, default=0.9,
+                   help="Aggressività della riduzione rumore, 0-1 (con --denoise)")
+    p.add_argument("--denoise-stationary", action="store_true",
+                   help="Usa il profilo di rumore stazionario invece di quello non-stazionario (con --denoise)")
+
     return p
 
 
@@ -150,9 +158,14 @@ def main():
         "boost_band": args.enhance_boost_band,
         "boost_gain_db": args.enhance_boost_db,
     }
+    denoise_kwargs = {
+        "prop_decrease": args.denoise_prop_decrease,
+        "stationary": args.denoise_stationary,
+    }
     report = extract_and_concatenate(
         sources, args.output, segments_dir=segments_dir, normalize_target_dbfs=normalize_target,
         enhance=args.enhance, enhance_kwargs=enhance_kwargs,
+        denoise=args.denoise, denoise_kwargs=denoise_kwargs,
     )
     print(f"\nOutput scritto: {args.output}")
     print(f"Report: {Path(args.output).with_suffix('')}_report.csv / .json / _labels.txt")

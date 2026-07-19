@@ -8,7 +8,7 @@ import numpy as np
 import soundfile as sf
 import librosa
 
-from .enhance import enhance_bark_presence
+from .enhance import enhance_bark_presence, denoise_background
 
 
 def _read_range(path, start_s, end_s):
@@ -30,6 +30,7 @@ def _to_mono_if_needed(data, target_channels):
 def extract_and_concatenate(
     sources, output_path, segments_dir=None, target_sr=None, target_channels=1,
     normalize_target_dbfs=-1.0, enhance=False, enhance_kwargs=None,
+    denoise=False, denoise_kwargs=None,
 ):
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -58,6 +59,9 @@ def extract_and_concatenate(
                     axis=1,
                 )
                 sr = this_target_sr
+
+            if denoise:
+                data = denoise_background(data, sr, **(denoise_kwargs or {}))
 
             if enhance:
                 data = enhance_bark_presence(data, sr, **(enhance_kwargs or {}))
