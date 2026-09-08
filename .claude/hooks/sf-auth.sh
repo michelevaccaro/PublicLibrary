@@ -6,9 +6,8 @@ if [ "${CLAUDE_CODE_REMOTE:-}" != "true" ]; then
   exit 0
 fi
 
-# Requires SF_JWT_KEY_B64 to be set as a persistent environment variable
-# on this Claude Code environment (Settings -> Environment variables).
-if [ -z "${SF_JWT_KEY_B64:-}" ]; then
+KEY_FILE_B64="$CLAUDE_PROJECT_DIR/.claude/hooks/sf-jwt-key.b64"
+if [ ! -f "$KEY_FILE_B64" ]; then
   exit 0
 fi
 
@@ -18,7 +17,7 @@ fi
 
 KEY_DIR="$HOME/.sf-jwt"
 mkdir -p "$KEY_DIR"
-echo "$SF_JWT_KEY_B64" | base64 -d > "$KEY_DIR/server.key"
+base64 -d "$KEY_FILE_B64" > "$KEY_DIR/server.key"
 chmod 600 "$KEY_DIR/server.key"
 
 sf org login jwt \
